@@ -111,7 +111,7 @@ export interface Repository {
 }
 
 export namespace Repository {
-    export function equal(repository: Repository | undefined, repository2: Repository | undefined): boolean {
+    export function equal(repository: Repository | undefined, repository2: Repository | undefined): boolean {
         if (repository && repository2) {
             return repository.localUri === repository2.localUri;
         }
@@ -180,7 +180,7 @@ export interface Branch {
 }
 
 /**
- * A git commit.
+ * A Git commit.
  */
 export interface Commit {
 
@@ -236,4 +236,69 @@ export interface CommitIdentity {
      */
     readonly tzOffset: number;
 
+}
+
+/**
+ * The result of shelling out to Git.
+ */
+export interface IGitResult {
+
+    /**
+     * The standard output from Git.
+     */
+    readonly stdout: string;
+
+    /**
+     * The standard error output from Git.
+     */
+    readonly stderr: string;
+
+    /**
+     * The exit code of the Git process.
+     */
+    readonly exitCode: number;
+
+}
+
+/**
+ * The Git errors which can be parsed from failed Git commands.
+ */
+export declare enum GitError {
+    SSHKeyAuditUnverified = 0,
+    SSHAuthenticationFailed = 1,
+    SSHPermissionDenied = 2,
+    HTTPSAuthenticationFailed = 3,
+    RemoteDisconnection = 4,
+    HostDown = 5,
+    RebaseConflicts = 6,
+    MergeConflicts = 7,
+    HTTPSRepositoryNotFound = 8,
+    SSHRepositoryNotFound = 9,
+    PushNotFastForward = 10,
+    BranchDeletionFailed = 11,
+    DefaultBranchDeletionFailed = 12,
+    RevertConflicts = 13,
+    EmptyRebasePatch = 14,
+    NoMatchingRemoteBranch = 15,
+    NothingToCommit = 16,
+    NoSubmoduleMapping = 17,
+    SubmoduleRepositoryDoesNotExist = 18,
+    InvalidSubmoduleSHA = 19,
+    LocalPermissionDenied = 20,
+    InvalidMerge = 21,
+    InvalidRebase = 22,
+    NonFastForwardMergeIntoEmptyHead = 23,
+    PatchDoesNotApply = 24,
+    BranchAlreadyExists = 25,
+    BadRevision = 26,
+    NotAGitRepository = 27,
+    CannotMergeUnrelatedHistories = 28,
+    LFSAttributeDoesNotMatch = 29,
+    PushWithFileSizeExceedingLimit = 30,
+    HexBranchNameRejected = 31,
+    ForcePushRejected = 32,
+    InvalidRefLength = 33,
+    ProtectedBranchRequiresReview = 34,
+    ProtectedBranchForcePush = 35,
+    PushWithPrivateEmail = 36,
 }

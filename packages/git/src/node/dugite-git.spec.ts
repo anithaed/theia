@@ -289,6 +289,35 @@ describe('git', async function () {
 
     });
 
+    describe('exec', async () => {
+
+        it('version', async () => {
+            const root = track.mkdirSync('exec-version');
+            const localUri = FileUri.create(root).toString();
+            await initRepository(root);
+
+            const git = await createGit();
+            const result = await git.exec({ localUri }, ['--version']);
+            expect(result.stdout.trim().replace(/^git version /, '').startsWith('2')).to.be.true;
+            expect(result.stderr.trim()).to.be.empty;
+            expect(result.exitCode).to.be.equal(0);
+
+        });
+
+        it('missing command', async () => {
+            const root = track.mkdirSync('exec-foo');
+            const localUri = FileUri.create(root).toString();
+            await initRepository(root);
+
+            const git = await createGit();
+            const result = await git.exec({ localUri }, ['foo'], { successExitCodes: new Set([1]) });
+            expect(result.stdout.trim()).to.be.empty;
+            expect(result.stderr.trim()).to.be.not.empty;
+            expect(result.exitCode).to.be.not.equal(0);
+        });
+
+    });
+
 });
 
 async function createGit(fsRoot: string = ''): Promise<DugiteGit> {
